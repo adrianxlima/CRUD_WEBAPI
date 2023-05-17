@@ -210,6 +210,10 @@
               "target": "Package",
               "version": "[6.11.0, )"
             },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "xunit": {
               "target": "Package",
               "version": "[2.5.0-pre.11, )"

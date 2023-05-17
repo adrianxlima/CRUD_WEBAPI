@@ -14,5 +14,7 @@ namespace PedidoWebApi.Domain.Services
         Cliente SearchID(Guid Id);
 
         List<Cliente> GetAll();
+        bool Remove(Guid id);
+
     }
 }

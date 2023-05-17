@@ -43,6 +43,11 @@ namespace PedidoWebApi.Domain.Services
             Pedidos.Remove(pedido);
         }
 
+        public bool Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Pedido SearchID(Guid Id)
         {   
             try

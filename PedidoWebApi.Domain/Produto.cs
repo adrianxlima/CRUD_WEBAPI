@@ -8,6 +8,8 @@ public class Produto
     public decimal Valor { get; set; }
     public ICollection<Produto> Produtos { get; set; }
     public List<PedidoProduto> PedidoProdutos {get;set;}
+    public decimal Preco { get; set; }
+    public int Quantidade { get; set; }
 
     public Produto()
     {

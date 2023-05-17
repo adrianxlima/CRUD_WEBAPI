@@ -46,6 +46,11 @@ namespace PedidoWebApi.Domain.Services
             Produtos.Remove(produto);
         }
 
+        public bool Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Produto SearchID(Guid Id)
         {   
             try

@@ -9,6 +9,7 @@ namespace PedidoWebApi.Domain.Services
         Pedido Update(Pedido pedido);
         Pedido SearchID(Guid Id);
 
-        List<Pedido> GetAll();  
+        List<Pedido> GetAll();
+        bool Remove(Guid id);
     }
 }

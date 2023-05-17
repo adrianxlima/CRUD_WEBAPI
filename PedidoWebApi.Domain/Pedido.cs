@@ -16,6 +16,9 @@ public class Pedido
     public Cliente cliente { get; set; }
     public Guid idCliente { get; set; }
     public object ValorTotal { get; set; }
+    public string Nome { get; set; }
+    public string Senha { get; set; }
+
     Collection<PedidoProduto> pedidoProdutos = new Collection<PedidoProduto>();
     
 }

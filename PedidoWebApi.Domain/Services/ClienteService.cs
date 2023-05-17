@@ -26,6 +26,9 @@ namespace PedidoWebApi.Domain.Services
                 Nome = "Nome3",
             }
         };
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
 
         public void Create(Cliente cliente)
         {   
@@ -41,6 +44,12 @@ namespace PedidoWebApi.Domain.Services
         {
             Clientes.Remove(cliente);
         }
+
+        public bool Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Cliente SearchID(Guid Id)
         {   
             Cliente cliente = new Cliente();
@@ -56,10 +65,21 @@ namespace PedidoWebApi.Domain.Services
 
             return cliente;
         }
+
+        public object SearchID(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Cliente Update(Cliente cliente)
         {
             Clientes[Clientes.FindIndex(p => p.Id == cliente.Id)] = cliente;
             return Clientes[Clientes.FindIndex(p => p.Id == cliente.Id)];
+        }
+
+        public void Update(ClienteService user)
+        {
+            throw new NotImplementedException();
         }
     }
 }
