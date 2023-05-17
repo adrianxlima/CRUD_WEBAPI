@@ -1,0 +1,14 @@
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\PedidoWebApi.Domain.csproj.AssemblyReference.cache
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\PedidoWebApi.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\PedidoWebApi.Domain.AssemblyInfoInputs.cache
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\PedidoWebApi.Domain.AssemblyInfo.cs
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\PedidoWebApi.Domain.csproj.CoreCompileInputs.cache
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\bin\Debug\net7.0\PedidoWebApi.Domain.deps.json
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\bin\Debug\net7.0\PedidoWebApi.Domain.dll
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\bin\Debug\net7.0\PedidoWebApi.Domain.pdb
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\PedidoWebApi.Domain.dll
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\refint\PedidoWebApi.Domain.dll
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\PedidoWebApi.Domain.pdb
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\ref\PedidoWebApi.Domain.dll
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\bin\Debug\net7.0\PedidoWebApi.Domain.runtimeconfig.json
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Domain\obj\Debug\net7.0\PedidoWebApi.Domain.genruntimeconfig.cache

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "X6RTMrfJ5F8zYqmP/NmAz+hm0iaKZDYHcAZxsG+t29k=",
+  "Source": "PedidoWebApi.Api",
+  "BasePath": "_content/PedidoWebApi.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
