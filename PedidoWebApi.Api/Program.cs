@@ -1,6 +1,6 @@
 using PedidoWebApi.Api.Infrastructure;
 using PedidoWebApi.Api.Repository;
-using PedidoWebApi.Domain.Services;
+using PedidoWebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();

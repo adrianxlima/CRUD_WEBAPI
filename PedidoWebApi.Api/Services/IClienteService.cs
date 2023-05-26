@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProjetoWebApi.Domain;
 
-namespace PedidoWebApi.Domain.Services
+namespace PedidoWebApi.Services
 {
     public interface IClienteService
     {   

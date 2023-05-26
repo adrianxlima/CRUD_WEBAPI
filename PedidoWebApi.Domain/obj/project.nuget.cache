@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wsQqDgFU5k7i2Rrg5f54R76l8tKTg5efeH9s/7CGLEiacfhpy+wqTp3Q4b7+BxYBFN04ERR7u33zb7mjDSs7yg==",
+  "dgSpecHash": "t6rT4QyHIPD0yDPQuRiWFWutbkB6/rcI0qLtd5N2V/n7szi24xQ1Qr7v5TIbnmchr8tEH3deg/HPipQlqGV12g==",
   "success": true,
   "projectFilePath": "c:\\Users\\adria\\OneDrive\\Área de Trabalho\\ProjetoWebAPI\\PedidoWebApi.Domain\\PedidoWebApi.Domain.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\adria\\.nuget\\packages\\fluentvalidation\\11.5.2\\fluentvalidation.11.5.2.nupkg.sha512",
     "C:\\Users\\adria\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\adria\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.0\\microsoft.entityframeworkcore.7.0.0.nupkg.sha512",
     "C:\\Users\\adria\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.0\\microsoft.entityframeworkcore.abstractions.7.0.0.nupkg.sha512",

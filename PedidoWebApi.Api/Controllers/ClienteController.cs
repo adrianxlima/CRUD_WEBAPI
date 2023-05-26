@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using PedidoWebApi.Api.Repository;
-using PedidoWebApi.Domain.Services;
 using ProjetoWebApi.Domain;
 
 namespace PedidoWebApi.Api.Controllers;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProjetoWebApi.Domain;
 
-namespace PedidoWebApi.Domain.Services
+namespace PedidoWebApi.Services
 {
     public class ProdutoService : IProdutoService
     {   
@@ -35,7 +35,6 @@ namespace PedidoWebApi.Domain.Services
         {
             Produtos.Add(produto);
         }
-
         public List<Produto> GetAll()
         {
             return Produtos;
@@ -50,7 +49,6 @@ namespace PedidoWebApi.Domain.Services
         {
             throw new NotImplementedException();
         }
-
         public Produto SearchID(Guid Id)
         {   
             try
@@ -79,6 +77,15 @@ namespace PedidoWebApi.Domain.Services
 
            }
            
+        }
+        List<Produto> IProdutoService.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        Produto IProdutoService.SearchID(Guid Id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

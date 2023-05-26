@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PedidoWebApi.Services;
 using ProjetoWebApi.Domain;
 
-namespace PedidoWebApi.Domain.Services
+namespace PedidoWebApi.Services
 {
     public class ClienteService : IClienteService
     {   
@@ -78,6 +79,15 @@ namespace PedidoWebApi.Domain.Services
         }
 
         public void Update(ClienteService user)
+        {
+            throw new NotImplementedException();
+        }
+        List<Cliente> IClienteService.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        Cliente IClienteService.SearchID(Guid Id)
         {
             throw new NotImplementedException();
         }

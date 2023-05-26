@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProjetoWebApi.Domain;
 
-namespace PedidoWebApi.Domain.Services
+namespace PedidoWebApi.Services
 {
     public class PedidoService : IPedidoService
     {
@@ -33,6 +33,7 @@ namespace PedidoWebApi.Domain.Services
             Pedidos.Add(pedido);
         }
 
+
         public List<Pedido> GetAll()
         {
             return Pedidos;
@@ -47,6 +48,7 @@ namespace PedidoWebApi.Domain.Services
         {
             throw new NotImplementedException();
         }
+
 
         public Pedido SearchID(Guid Id)
         {   

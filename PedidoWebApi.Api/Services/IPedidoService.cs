@@ -1,6 +1,6 @@
 using ProjetoWebApi.Domain;
 
-namespace PedidoWebApi.Domain.Services
+namespace PedidoWebApi.Services
 {
     public interface IPedidoService
     {
