@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PedidoWebApi.Domain.Domain.Enum;
 using ProjetoWebApi.Domain;
 
 namespace PedidoWebApi.Api.Infrastructure
@@ -10,6 +11,7 @@ namespace PedidoWebApi.Api.Infrastructure
     
     public class ApplicationDbContext : DbContext
     {   
+        public DbSet<Payment> payments => Set<Payment>();
         public DbSet<Cliente> Clientes {get; set;}
         public DbSet<Pedido> Pedidos {get; set;}
         public DbSet<Produto> Produtos {get; set;}

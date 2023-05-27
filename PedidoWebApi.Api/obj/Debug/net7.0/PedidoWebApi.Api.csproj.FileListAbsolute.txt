@@ -45,3 +45,6 @@ C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Api\bin\Deb
 C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Api\bin\Debug\net7.0\Npgsql.dll
 C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Api\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Api\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Api\bin\Debug\net7.0\FluentValidation.dll
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Api\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\adria\OneDrive\Área de Trabalho\ProjetoWebAPI\PedidoWebApi.Api\bin\Debug\net7.0\RabbitMQ.Client.dll

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k2fL2+m5XoKETfwOHR1LnHGFQafGg8si2LI+ovv3T5eiLh40tg5XyMpDltBiAbwQK98mEFTsdxY36T6h0PpAQA==",
+  "dgSpecHash": "1NFo1jY0Zd7SUkzVY4TOcFitNFTE4EpxWkRSzjC2pLz8KsaUARyHnki9ru3HPkVIUUezEswCSs1Jl33+p/zFBA==",
   "success": true,
-  "projectFilePath": "c:\\Users\\adria\\OneDrive\\Área de Trabalho\\ProjetoWebAPI\\PedidoWebApi.Api\\PedidoWebApi.Api.csproj",
+  "projectFilePath": "C:\\Users\\adria\\OneDrive\\Área de Trabalho\\ProjetoWebAPI\\PedidoWebApi.Api\\PedidoWebApi.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\adria\\.nuget\\packages\\entityframeworkcore.exceptions.common\\6.0.3\\entityframeworkcore.exceptions.common.6.0.3.nupkg.sha512",
     "C:\\Users\\adria\\.nuget\\packages\\entityframeworkcore.exceptions.postgresql\\6.0.3\\entityframeworkcore.exceptions.postgresql.6.0.3.nupkg.sha512",

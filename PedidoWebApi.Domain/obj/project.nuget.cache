@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "t6rT4QyHIPD0yDPQuRiWFWutbkB6/rcI0qLtd5N2V/n7szi24xQ1Qr7v5TIbnmchr8tEH3deg/HPipQlqGV12g==",
+  "dgSpecHash": "Viw7T11cQHUkuxb2wmvqGWJgPey6JMcfH1lPfE+dOxI7c7qfczw5Tk839uCSJh1E19oUQBtXlSkPkPLN7PWbOw==",
   "success": true,
-  "projectFilePath": "c:\\Users\\adria\\OneDrive\\Área de Trabalho\\ProjetoWebAPI\\PedidoWebApi.Domain\\PedidoWebApi.Domain.csproj",
+  "projectFilePath": "C:\\Users\\adria\\OneDrive\\Área de Trabalho\\ProjetoWebAPI\\PedidoWebApi.Domain\\PedidoWebApi.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\adria\\.nuget\\packages\\fluentvalidation\\11.5.2\\fluentvalidation.11.5.2.nupkg.sha512",
     "C:\\Users\\adria\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

@@ -14,7 +14,6 @@ namespace PedidoWebApi.Api.Infrastructure
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private const string TrackingsExchange = "tracking-service";
-
         public Publisher()
         {
             var connectionFactory = new ConnectionFactory
@@ -27,7 +26,6 @@ namespace PedidoWebApi.Api.Infrastructure
             _connection = connectionFactory.CreateConnection("ELRabbit");
             _channel = _connection.CreateModel();
         }
-
         public void Publish(PaymentDTO dto, String queue)
         {
             var payLoad = JsonConvert.SerializeObject(dto);

@@ -8,7 +8,8 @@ namespace PedidoWebApi.Services
 {
     public interface IPaymentService
     {
-         void MakePayment(CreditCard creditCard);
-         string CheckPaymentStatus();
+         
+         string CheckPaymentStatus(Guid id);
+        void MakePayment(CreditCard creditCard);
     }
 }
