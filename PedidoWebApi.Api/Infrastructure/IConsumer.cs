@@ -8,7 +8,6 @@ namespace PedidoWebApi.Api.Infrastructure
 {
     public interface IConsumer
     {
-        void Consume(PaymentMessageDTO paymentMessageDTO);
-        void MessageOrder(PedidoMessageDTO pedidoMessageDTO);
+        Task Consume(PaymentDTO paymentDTO);
     }
 }

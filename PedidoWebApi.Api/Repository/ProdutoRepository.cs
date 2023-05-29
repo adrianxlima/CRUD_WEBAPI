@@ -16,10 +16,11 @@ namespace PedidoWebApi.Api.Repository
             _context = context;
         }
 
-        public void Create(Produto produto)
+        public Produto Create(Produto produto)
         {
             _context.Produtos.Add(produto);
             _context.SaveChanges();
+            return produto;
         }
 
         public List<Produto> GetAll()
@@ -35,7 +36,7 @@ namespace PedidoWebApi.Api.Repository
 
         public Produto SearchID(Guid Id)
         {
-            return _context.Produtos.FirstOrDefault(p => p.Id == Id);
+            return _context.Produtos.FirstOrDefault(p => p.Id == Id)!;
         }
 
         public Produto Update(Produto produto)

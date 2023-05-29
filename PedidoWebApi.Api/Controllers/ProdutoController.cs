@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PedidoWebApi.Api.Repository;
+using PedidoWebApi.Domain.Domain.DTO;
+using PedidoWebApi.Services;
 using ProjetoWebApi.Domain;
 
 namespace PedidoWebApi.Api.Controllers;
@@ -8,9 +10,11 @@ namespace PedidoWebApi.Api.Controllers;
 public class ProdutoController : ControllerBase
 {       
      private readonly  IProdutoRepository _produtoRepository;
+     private readonly IProdutoService _produtoService;
 
-    public ProdutoController(IProdutoRepository produtoRepository)
+    public ProdutoController(IProdutoRepository produtoRepository, IProdutoService produtoService)
     {
+        _produtoService = produtoService;
         _produtoRepository = produtoRepository;
     }
 
@@ -21,20 +25,20 @@ public class ProdutoController : ControllerBase
     }
 
     [HttpPost("Get")]
-    public Produto Get(Guid id)
+    public Produto Get([FromBody] Guid id)
     {
         return _produtoRepository.SearchID(id);
     }
 
     [HttpPost]
-    public IActionResult Add(Produto produto)
+    public IActionResult Add([FromBody] ProdutoDTO dto)
     {
-        _produtoRepository.Create(produto);
-        return Ok();
+       var res =  _produtoService.Create(dto);
+        return Ok(res);
     }
 
     [HttpPut]
-    public IActionResult Update(Produto produto)
+    public IActionResult Update([FromBody] Produto produto)
     {
         try
         {
@@ -49,7 +53,7 @@ public class ProdutoController : ControllerBase
     }
 
     [HttpDelete]
-    public IActionResult Delete(Guid id)
+    public IActionResult Delete([FromBody] Guid id)
     {
         _produtoRepository.Remove(_produtoRepository.SearchID(id));
         return Ok();

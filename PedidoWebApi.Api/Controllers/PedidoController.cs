@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjetoWebApi.Domain;
 using PedidoWebApi.Api.Repository;
+using PedidoWebApi.Domain.Domain.DTO;
+using PedidoWebApi.Services;
 
 namespace PedidoWebApi.Api.Controllers;
 
@@ -8,21 +10,27 @@ namespace PedidoWebApi.Api.Controllers;
 public class PedidoController : ControllerBase
 {
     private readonly IPedidoRepository _pedidoRepository;
+    private readonly IPedidoService _pedidoService;
 
-        public PedidoController(IPedidoRepository pedidoRepository)
+        public PedidoController(IPedidoRepository pedidoRepository, IPedidoService pedidoService)
         {
+            _pedidoService = pedidoService;
             _pedidoRepository = pedidoRepository;
         }
 
         [HttpPost("GetByPedido")]
-        public Pedido GetByPedido(Guid PedidoId)
+        public IActionResult GetByPedido([FromBody] Guid PedidoId)
         {
-            Pedido pedido = _pedidoRepository.SearchID(PedidoId);
-            return pedido;
+            var pedido = _pedidoService.SearchID(PedidoId);
+            if(pedido is null)
+            {
+                return BadRequest("Pedido não encontrado.");
+            }
+            return Ok(pedido);
         }
 
         [HttpPost("Get")]
-        public IActionResult Get(Guid id)
+        public IActionResult Get([FromBody] Guid id)
         {
             try
             {
@@ -32,30 +40,26 @@ public class PedidoController : ControllerBase
 
                 return Ok(pedido);
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while processing the request.");
+                return StatusCode(500, $"An error occurred while processing the request. Message: {ex.Message}");
             }
         }
 
         [HttpPost]
-        public IActionResult Add(Pedido pedido)
+        public IActionResult Add([FromBody] PedidoDTO dto)
         {
-            if (pedido == null)
-                return BadRequest("Invalid pedido object.");
-
-            _pedidoRepository.Create(pedido);
-            return Ok();
+            
+            Console.WriteLine(dto);
+            var pedido =  _pedidoService.Create(dto);
+            if(pedido is string p)
+            {
+                return BadRequest(p);
+            }
+            return Ok(pedido);
         }
-
-        [HttpPost("Produto")]
-        public IActionResult AddProdutoPedido(Pedido pedido)
-        {
-            throw new NotImplementedException();
-        }
-
         [HttpDelete]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete([FromBody] Guid id)
         {
             Pedido pedido = _pedidoRepository.SearchID(id);
             if (pedido == null)
@@ -66,14 +70,15 @@ public class PedidoController : ControllerBase
         }
 
         [HttpPut]
-        public IActionResult Update(Pedido pedido)
+        public IActionResult Update([FromBody] PedidoUpdateDTO pedidoUpdateDTO)
         {
-            if (pedido == null)
+            if (pedidoUpdateDTO == null)
                 return BadRequest("Invalid pedido object.");
 
-            Pedido updatedPedido = _pedidoRepository.Update(pedido);
-            if (updatedPedido == null)
-                return NotFound();
+            var updatedPedido = _pedidoService.Update(pedidoUpdateDTO);
+            if (updatedPedido is string p)
+                return BadRequest(p);
+                
 
             return Ok(updatedPedido);
         }

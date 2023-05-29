@@ -18,7 +18,7 @@ namespace PedidoWebApi.Api.Controllers
             _iPaymentService = iPaymentService;
         }
         [HttpPost]
-        public IActionResult Payment(PaymentDTO dTO)
+        public IActionResult Payment([FromBody] PaymentDTO dTO)
         {   
                 if (dTO.IdPedido == Guid.Empty)
             {
@@ -34,10 +34,18 @@ namespace PedidoWebApi.Api.Controllers
             // Lógica para processar o pagamento
             try
             {
+                var payment = _iPaymentService.MakePayment(dTO);
+                if(payment is string p)
+                {
+                    Console.WriteLine(p);
+                    return BadRequest(p.ToString());
+                }
+                
                 return Ok("Pagamento processado com sucesso!");
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return StatusCode(500, $"Erro ao processar o pagamento: {ex.Message}");
             }
         }
@@ -45,7 +53,7 @@ namespace PedidoWebApi.Api.Controllers
         
         [HttpPost]
         [Route("GetOne")]
-        public IActionResult GetOne(Guid id)
+        public IActionResult GetOne([FromBody] Guid id)
         {
            throw new NotImplementedException();
         }

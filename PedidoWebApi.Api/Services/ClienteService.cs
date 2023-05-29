@@ -2,94 +2,72 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PedidoWebApi.Api.Repository;
+using PedidoWebApi.Domain.Domain.DTO;
 using PedidoWebApi.Services;
 using ProjetoWebApi.Domain;
 
 namespace PedidoWebApi.Services
 {
     public class ClienteService : IClienteService
-    {   
-        public List<Cliente> Clientes{get; set;} = new()
+    {
+        private readonly IClienteRepository _clienteRepository;
+        public ClienteService(IClienteRepository clienteRepository)
         {
-            new Cliente
-            {
-                Id = Guid.NewGuid(),
-                Nome = "Nome1",
-            },
-             new Cliente
-            {
-                Id = Guid.NewGuid(),
-                Nome = "Nome2",
-            },
-             new Cliente
-            {
-                Id = Guid.NewGuid(),
-                Nome = "Nome3",
-            }
-        };
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
+            _clienteRepository = clienteRepository;
+        }
+        public ClienteDTO Create(ClienteDTO clienteDTO)
+        {
+            var clientes = _clienteRepository.GetClientes()
+                    .Find(p => p.Nome == clienteDTO.Nome);
 
-        public void Create(Cliente cliente)
-        {   
-            Clientes.Add(cliente);
+            if (clientes is null)
+            {
+                var newCliente = _clienteRepository.Create(new Cliente()
+                {
+                    Nome = clienteDTO.Nome,
+                    Senha = clienteDTO.Senha
+                });
+                Console.WriteLine(newCliente);
+                return new ClienteDTO()
+                {
+                    id = newCliente.id,
+                    Nome = newCliente.Nome,
+                };
+            }
+            return null!;
         }
 
         public List<Cliente> GetAll()
         {
-            return Clientes;
+            return _clienteRepository.GetClientes();
         }
 
-        public void Remove(Cliente cliente)
+        public Boolean Remove(Cliente cliente)
         {
-            Clientes.Remove(cliente);
-        }
-
-        public bool Remove(Guid id)
-        {
-            throw new NotImplementedException();
+            var selectCliente = _clienteRepository.SearchID(cliente.Id);
+            if(selectCliente is not null)
+            {
+               _clienteRepository.Remove(cliente);
+                return true;
+            }
+            return false;
         }
 
         public Cliente SearchID(Guid Id)
-        {   
-            Cliente cliente = new Cliente();
-            try
-            {
-                cliente = Clientes.Find(c => c.Id == Id);
-                
-            }
-            catch(Exception exception)
-            {
-                Console.WriteLine($"error: {exception.Message}");
-            }
-
-            return cliente;
-        }
-
-        public object SearchID(int userId)
         {
-            throw new NotImplementedException();
+            var cliente = _clienteRepository.SearchID(Id);
+            return cliente;
         }
 
         public Cliente Update(Cliente cliente)
         {
-            Clientes[Clientes.FindIndex(p => p.Id == cliente.Id)] = cliente;
-            return Clientes[Clientes.FindIndex(p => p.Id == cliente.Id)];
-        }
-
-        public void Update(ClienteService user)
-        {
-            throw new NotImplementedException();
-        }
-        List<Cliente> IClienteService.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        Cliente IClienteService.SearchID(Guid Id)
-        {
-            throw new NotImplementedException();
+            var clienteUpdate = _clienteRepository.SearchID(cliente.Id);
+            if (clienteUpdate is not null)
+            {
+                _clienteRepository.Update(cliente);
+            }
+            return null!;
         }
     }
 }

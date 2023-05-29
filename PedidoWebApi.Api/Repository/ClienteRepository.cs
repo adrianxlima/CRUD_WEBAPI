@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PedidoWebApi.Api.Infrastructure;
+using PedidoWebApi.Domain.Domain.DTO;
 using ProjetoWebApi.Domain;
 
 namespace PedidoWebApi.Api.Repository
@@ -16,12 +17,17 @@ namespace PedidoWebApi.Api.Repository
             _context = context;
         }
 
-        public void Create(Cliente cliente)
-        { 
+        public ClienteDTO Create(Cliente cliente)
+        {
             _context.Add(cliente);
             _context.SaveChanges();
+            return new ClienteDTO()
+            {
+                Nome = cliente.Nome,
+                id = cliente.Id
+            };
         }
-        public IEnumerable<Cliente> GetClientes(Guid id)
+        public List<Cliente> GetClientes()
         {
             return _context.Clientes.ToList();
         }
@@ -33,7 +39,8 @@ namespace PedidoWebApi.Api.Repository
         }
         public Cliente SearchID(Guid Id)
         {
-            Cliente cliente = _context.Clientes.FirstOrDefault(c => c.Id == Id);
+            var cliente =  _context.Clientes.FirstOrDefault(c => c.Id == Id)!;
+            Console.WriteLine(cliente);
             return cliente;
         }
         public Cliente Update(Cliente cliente)
@@ -41,20 +48,6 @@ namespace PedidoWebApi.Api.Repository
             _context.Update(cliente);
             _context.SaveChanges();
             return cliente;
-        }
-        public List<Cliente> GetAllClientes(Cliente cliente)
-        {
-            IQueryable<Cliente> query = _context.Clientes;
-
-            if (cliente.Id != Guid.Empty)
-                query = query.Where(c => c.Id == cliente.Id);
-
-            if (!string.IsNullOrEmpty(cliente.Nome))
-                query = query.Where(c => c.Nome == cliente.Nome);
-
-            List<Cliente> resultado = query.ToList();
-
-            return resultado;
         }
     }
 }

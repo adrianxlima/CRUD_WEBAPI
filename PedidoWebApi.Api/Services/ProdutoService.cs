@@ -2,47 +2,48 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PedidoWebApi.Api.Repository;
+using PedidoWebApi.Domain.Domain.DTO;
+using PedidoWebApi.Domain.Domain.Validators;
 using ProjetoWebApi.Domain;
 
 namespace PedidoWebApi.Services
 {
     public class ProdutoService : IProdutoService
-    {   
-        public List<Produto> Produtos{get; set;} = new()
+    {
+        private readonly IProdutoRepository _repository;
+        public ProdutoService(IProdutoRepository repository)
         {
-            new Produto
-            {
-                Id = Guid.NewGuid(),
-                Valor = 10,
-                Nome = "NAME1",
-                
-            },
-             new Produto
-            {
-                Id = Guid.NewGuid(),
-                Valor = 10,
-                Nome = "NAME1",
-            },
-             new Produto
-            {
-                Id = Guid.NewGuid(),
-                Valor = 10,
-                Nome = "NAME1",
-            }
-        };
+            _repository = repository;
+        }
 
-        public void Create(Produto produto)
+        public Object Create(ProdutoDTO dto)
         {
-            Produtos.Add(produto);
+            var validator = new ProdutoDTOValidation()
+                .Validate(dto);
+
+            if (validator.IsValid)
+            {
+                return _repository.Create(
+                  new Produto()
+                  {
+                    Nome = dto.Nome,
+                    Valor = dto.Valor,
+                    Quantidade = dto.Quantidade
+                  }
+                );
+            }
+            
+            return validator.ToString();
         }
         public List<Produto> GetAll()
         {
-            return Produtos;
+            return new List<Produto>();
         }
 
         public void Remove(Produto produto)
         {
-            Produtos.Remove(produto);
+            _repository.Remove(produto);
         }
 
         public bool Remove(Guid id)
@@ -50,42 +51,26 @@ namespace PedidoWebApi.Services
             throw new NotImplementedException();
         }
         public Produto SearchID(Guid Id)
-        {   
-            try
-           { 
-            Produto produto = Produtos.Where(Produto => Produto.Id == Id).First();
+        {
+            var produto = _repository.SearchID(Id);
             return produto;
-           }
-           catch(Exception exception)
-           {
-                return null;
-           }
-           
         }
 
-        public Produto Update(Produto produto)
+        public Produto Update(ProdutoDTO produtoDTO)
         {
-           try
-           { 
-           Produtos[Produtos.FindIndex(p => p.Id == produto.Id)] = produto;
-           return Produtos[Produtos.FindIndex(p => p.Id == produto.Id)];
-            
-           }
-           catch(Exception exception)
-           {
-                return produto;
-
-           }
-           
-        }
-        List<Produto> IProdutoService.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        Produto IProdutoService.SearchID(Guid Id)
-        {
-            throw new NotImplementedException();
+            var produto = _repository.SearchID(produtoDTO.id);
+            if(produto is not null)
+            {
+                _repository.Update(
+                    new Produto()
+                  {
+                    Nome = produtoDTO.Nome,
+                    Valor = produtoDTO.Valor,
+                    Quantidade = produtoDTO.Quantidade
+                  });
+                
+            }
+            return null!;
         }
     }
 }

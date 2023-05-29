@@ -5,18 +5,10 @@ namespace ProjetoWebApi.Domain;
 public class Pedido
 {
     public Guid Id { get; set; }
-    public decimal Valor { get; set; }
-    
-    public ICollection<Pedido> Pedidos { get; set; }
-
-    public List<PedidoProduto> PedidoProdutos {get;set;}
+    public Boolean pagamento {get; set;} = false;
+    public List<PedidoProduto> PedidoProdutos {get;set;} = new();
     [JsonIgnore]
     public Cliente cliente { get; set; }
     public Guid idCliente { get; set; }
-    public object ValorTotal { get; set; }
-    public string Nome { get; set; }
-    public string Senha { get; set; }
-
-    Collection<PedidoProduto> pedidoProdutos = new Collection<PedidoProduto>();
-    
+    public decimal ValorTotal { get; set; }    
 }

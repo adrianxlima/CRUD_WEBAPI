@@ -7,7 +7,9 @@ namespace PedidoWebApi.Domain.Domain.DTO
 {
     public class PaymentDTO
     {
+
+        public CreditCard? Card {get; set;}
         public Guid IdPedido { get; set; }
-        public String Method { get; set; } = "";
+        public required String Method { get; set; } 
     }
 }

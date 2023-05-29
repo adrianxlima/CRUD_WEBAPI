@@ -12,8 +12,8 @@ using PedidoWebApi.Api.Infrastructure;
 namespace PedidoWebApi.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230509120351_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230529161924_TesteMigrationsThree")]
+    partial class TesteMigrationsThree
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,27 @@ namespace PedidoWebApi.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("PedidoWebApi.Domain.Domain.Enum.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdPedido")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("payments");
+                });
 
             modelBuilder.Entity("ProjetoWebApi.Domain.Cliente", b =>
                 {
@@ -51,18 +72,16 @@ namespace PedidoWebApi.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("PedidoId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("Valor")
+                    b.Property<decimal>("ValorTotal")
                         .HasColumnType("numeric");
 
                     b.Property<Guid>("idCliente")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("pagamento")
+                        .HasColumnType("boolean");
 
-                    b.HasIndex("PedidoId");
+                    b.HasKey("Id");
 
                     b.HasIndex("idCliente");
 
@@ -100,15 +119,16 @@ namespace PedidoWebApi.Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ProdutoId")
-                        .HasColumnType("uuid");
+                    b.Property<decimal>("Preco")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProdutoId");
 
                     b.ToTable("Produtos");
                 });
@@ -122,10 +142,6 @@ namespace PedidoWebApi.Api.Migrations
 
             modelBuilder.Entity("ProjetoWebApi.Domain.Pedido", b =>
                 {
-                    b.HasOne("ProjetoWebApi.Domain.Pedido", null)
-                        .WithMany("Pedidos")
-                        .HasForeignKey("PedidoId");
-
                     b.HasOne("ProjetoWebApi.Domain.Cliente", "cliente")
                         .WithMany("pedidos")
                         .HasForeignKey("idCliente")
@@ -154,13 +170,6 @@ namespace PedidoWebApi.Api.Migrations
                     b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("ProjetoWebApi.Domain.Produto", b =>
-                {
-                    b.HasOne("ProjetoWebApi.Domain.Produto", null)
-                        .WithMany("Produtos")
-                        .HasForeignKey("ProdutoId");
-                });
-
             modelBuilder.Entity("ProjetoWebApi.Domain.Cliente", b =>
                 {
                     b.Navigation("Clientes");
@@ -171,15 +180,11 @@ namespace PedidoWebApi.Api.Migrations
             modelBuilder.Entity("ProjetoWebApi.Domain.Pedido", b =>
                 {
                     b.Navigation("PedidoProdutos");
-
-                    b.Navigation("Pedidos");
                 });
 
             modelBuilder.Entity("ProjetoWebApi.Domain.Produto", b =>
                 {
                     b.Navigation("PedidoProdutos");
-
-                    b.Navigation("Produtos");
                 });
 #pragma warning restore 612, 618
         }

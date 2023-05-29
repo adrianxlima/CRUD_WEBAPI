@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PedidoWebApi.Domain;
+using PedidoWebApi.Domain.Domain.DTO;
 
 namespace PedidoWebApi.Services
 {
@@ -10,6 +11,6 @@ namespace PedidoWebApi.Services
     {
          
          string CheckPaymentStatus(Guid id);
-        void MakePayment(CreditCard creditCard);
+        Object MakePayment(PaymentDTO paymentDTO);
     }
 }

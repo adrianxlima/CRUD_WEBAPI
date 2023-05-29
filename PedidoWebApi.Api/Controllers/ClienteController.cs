@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PedidoWebApi.Api.Repository;
+using PedidoWebApi.Domain.Domain.DTO;
+using PedidoWebApi.Services;
 using ProjetoWebApi.Domain;
 
 namespace PedidoWebApi.Api.Controllers;
@@ -8,20 +10,22 @@ namespace PedidoWebApi.Api.Controllers;
 [Route("api/[controller]")]
 public class ClienteController : ControllerBase
 {   
-    private readonly IClienteRepository _ClienteRepository;        
-    public ClienteController(IClienteRepository clienteRepository)
+    private readonly IClienteRepository _ClienteRepository;
+    private readonly IClienteService _clienteService;    
+    public ClienteController(IClienteRepository clienteRepository, IClienteService clienteService)
     {
+        _clienteService = clienteService;
         _ClienteRepository = clienteRepository;
     }    
     [HttpPost("GetAll")]
-public IActionResult GetAll(IEnumerable<Cliente> clientes)
+public IActionResult GetAll([FromBody] IEnumerable<Cliente> clientes)
 {
     try
     {
-        Cliente criterio = new Cliente();
-        List<Cliente> resultado = _ClienteRepository.GetAllClientes(criterio);
+        // Cliente criterio = new Cliente();
+        // List<Cliente> resultado = _ClienteRepository.GetAllClientes(criterio);
 
-        return Ok(resultado);
+        return Ok();
     }
     catch (Exception ex)
     {
@@ -30,7 +34,7 @@ public IActionResult GetAll(IEnumerable<Cliente> clientes)
 }
 
 [HttpPost("Get")]
-public IActionResult Get(Guid id)
+public IActionResult Get([FromBody] Guid id)
 {
     try
     {
@@ -47,21 +51,18 @@ public IActionResult Get(Guid id)
 }
 
 [HttpPost]
-public IActionResult Add(Cliente cliente)
+public IActionResult Add ([FromBody] ClienteDTO clienteDTO )
 {
-    try
-    {
-        _ClienteRepository.Create(cliente);
-        return Ok(cliente);
-    }
-    catch (Exception ex)
-    {
-        return BadRequest($"Error to create a new client: {ex.Message}");
-    }
+    
+        Console.WriteLine(clienteDTO);
+       var newCliente =  _clienteService.Create(clienteDTO);
+        return Ok(newCliente);
+    
+    
 }
 
 [HttpPut]
-public IActionResult Update(Cliente cliente)
+public IActionResult Update([FromBody] Cliente cliente)
 {
     try
     {
@@ -77,10 +78,8 @@ public IActionResult Update(Cliente cliente)
     }
 }
 
-
-
 [HttpDelete]
-public IActionResult Delete(Guid id)
+public IActionResult Delete([FromBody] Guid id)
 {
     try
     {

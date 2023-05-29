@@ -8,7 +8,7 @@ namespace PedidoWebApi.Api.Repository
 {
     public interface IProdutoRepository
     {
-            void Create(Produto produto);
+            Produto Create(Produto produto);
             void Remove(Produto produto);
             Produto Update(Produto produto);
             Produto SearchID(Guid Id);

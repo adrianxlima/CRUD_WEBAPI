@@ -1,28 +1,55 @@
+using Newtonsoft.Json;
 using PedidoWebApi.Api.Infrastructure;
 using PedidoWebApi.Api.Repository;
 using PedidoWebApi.Domain;
 using PedidoWebApi.Domain.Domain.DTO;
+using PedidoWebApi.Domain.Domain.Enum;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace PedidoWebApi.Services
 {
     public class PaymentService : IPaymentService
     {   
-        private readonly IPublisher _publisher;
+
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IPedidoRepository _pedidoRepository;
         
         
-        public PaymentService(IPaymentRepository paymentRepository, IPublisher publisher)
+        public PaymentService(IPaymentRepository paymentRepository, IPedidoRepository pedidoRepository)
         {
+            _pedidoRepository = pedidoRepository;
             _paymentRepository = paymentRepository;
-            _publisher = publisher;
         }
-        public void MakePayment(CreditCard creditCard)
-        {                   
-            CreditCardValidation creditCardValidation = new CreditCardValidation();
-            var resultValidation = creditCardValidation.Validate(creditCard);
-            if(resultValidation.IsValid)
+        public Object MakePayment(PaymentDTO paymentDTO)
+        {  
+            Publisher publishi = new Publisher();
+            var pedido = _pedidoRepository.SearchID(paymentDTO.IdPedido);
+            
+            if(pedido is not null)
             {
-                
+                if(paymentDTO.Card is not null)
+                {
+                    var creditCardValidation = new CreditCardValidation().Validate(paymentDTO.Card);
+                    if(creditCardValidation.IsValid)
+                    {
+                        publishi.Publish(paymentDTO);
+                        return true;
+                    }
+                        
+                    else
+                    {
+                        Console.WriteLine(creditCardValidation.ToString());
+                        return creditCardValidation.ToString()!;
+                    }
+                }
+                else{
+                    return "O cartão não existe.";
+                }
+            }
+            else
+            {
+                return "O pedido não pode ser nulo";
             }
         }
 

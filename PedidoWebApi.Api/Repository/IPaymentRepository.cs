@@ -9,7 +9,8 @@ namespace PedidoWebApi.Api.Repository
 {
     public interface IPaymentRepository
     {
-        void AddPayment(CreditCard creditCard);
+        Payment AddPayment(Payment payment);
+        
         Payment GetPaymentById(Guid id);
     }
 }

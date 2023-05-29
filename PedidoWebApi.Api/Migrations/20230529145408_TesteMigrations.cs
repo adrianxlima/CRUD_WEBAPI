@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PedidoWebApi.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class TesteMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,12 +30,28 @@ namespace PedidoWebApi.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "payments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Valor = table.Column<decimal>(type: "numeric", nullable: false),
+                    IdPedido = table.Column<Guid>(type: "uuid", nullable: false),
+                    Method = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_payments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Produtos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Nome = table.Column<string>(type: "text", nullable: false),
                     Valor = table.Column<decimal>(type: "numeric", nullable: false),
+                    Preco = table.Column<decimal>(type: "numeric", nullable: false),
+                    Quantidade = table.Column<int>(type: "integer", nullable: false),
                     ProdutoId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -53,9 +69,11 @@ namespace PedidoWebApi.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Valor = table.Column<decimal>(type: "numeric", nullable: false),
+                    pagamento = table.Column<bool>(type: "boolean", nullable: false),
                     idCliente = table.Column<Guid>(type: "uuid", nullable: false),
-                    PedidoId = table.Column<Guid>(type: "uuid", nullable: true)
+                    ValorTotal = table.Column<decimal>(type: "numeric", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: false),
+                    Senha = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,11 +84,6 @@ namespace PedidoWebApi.Api.Migrations
                         principalTable: "Clientes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Pedidos_Pedidos_PedidoId",
-                        column: x => x.PedidoId,
-                        principalTable: "Pedidos",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -115,11 +128,6 @@ namespace PedidoWebApi.Api.Migrations
                 column: "idCliente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pedidos_PedidoId",
-                table: "Pedidos",
-                column: "PedidoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Produtos_ProdutoId",
                 table: "Produtos",
                 column: "ProdutoId");
@@ -128,6 +136,9 @@ namespace PedidoWebApi.Api.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "payments");
+
             migrationBuilder.DropTable(
                 name: "PedidoProduto");
 

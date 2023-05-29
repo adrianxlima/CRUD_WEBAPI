@@ -16,14 +16,24 @@ namespace PedidoWebApi.Api.Repository
         {
             _context = context;
         }
-        public void AddPayment(CreditCard creditCard)
+        public Payment AddPayment(Payment payment)
         {
-            throw new NotImplementedException();
+            if(payment.Id !=null )
+            {
+                var OrderConsult = GetPaymentById(payment.Id);
+                if(OrderConsult !=null)
+                {
+                    return null!;
+                }
+            }
+            _context.payments.AddAsync(payment);
+            _context.SaveChanges();
+            return payment;
         }
 
         public Payment GetPaymentById(Guid id)
         {
-            return _context.payments.FirstOrDefault(p => p.Id == id);
+            return _context.payments.FirstOrDefault(p => p.Id == id)!;
         }
 
     }

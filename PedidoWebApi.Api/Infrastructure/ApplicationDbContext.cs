@@ -11,13 +11,14 @@ namespace PedidoWebApi.Api.Infrastructure
     
     public class ApplicationDbContext : DbContext
     {   
-        public DbSet<Payment> payments => Set<Payment>();
+        public DbSet<PedidoProduto> PedidoProdutos {get; set;}
+        public DbSet<Payment> payments {get; set;}
         public DbSet<Cliente> Clientes {get; set;}
         public DbSet<Pedido> Pedidos {get; set;}
         public DbSet<Produto> Produtos {get; set;}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Server=localhost; Port=5022; Database=postgres; Uid=postgres; Pwd=Mydb");
+            optionsBuilder.UseNpgsql(@"Server=localhost; Port=5432; Database=postgres; Uid=postgres; Pwd=Mydb");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,7 +38,7 @@ namespace PedidoWebApi.Api.Infrastructure
             modelBuilder.Entity<Pedido>()
                 .HasMany(p => p.PedidoProdutos)
                 .WithOne(p => p.Pedido)
-                .HasForeignKey(p => p.idProduto);
+                .HasForeignKey(p => p.IdPedido);
              modelBuilder.Entity<Produto>()
                 .HasMany(p => p.PedidoProdutos)
                 .WithOne(p => p.Produto)
@@ -46,6 +47,7 @@ namespace PedidoWebApi.Api.Infrastructure
                 .HasMany(e => e.pedidos)
                 .WithOne(p => p.cliente)
                 .HasForeignKey(p => p.idCliente);
+            
             
                
         }

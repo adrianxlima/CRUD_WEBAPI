@@ -12,26 +12,25 @@ namespace PedidoWebApi.Api.Infrastructure
      public class Publisher : IPublisher
     {
         private readonly IConnection _connection;
-        private readonly IModel _channel;
+        private IModel _channel;
         private const string TrackingsExchange = "tracking-service";
+        private string _queue = "FilaPagamentos";
         public Publisher()
         {
             var connectionFactory = new ConnectionFactory
             {
-                HostName = "localhost",
-                UserName = "admin",
-                Password = "123456789"
-            };
+                HostName = "localhost",                
+            };    
 
-            _connection = connectionFactory.CreateConnection("ELRabbit");
+            _connection = connectionFactory.CreateConnection();
             _channel = _connection.CreateModel();
         }
-        public void Publish(PaymentDTO dto, String queue)
+        public void Publish(PaymentDTO dto)
         {
             var payLoad = JsonConvert.SerializeObject(dto);
             var byteArray = Encoding.UTF8.GetBytes(payLoad);
 
-            _channel.BasicPublish(TrackingsExchange, queue, null, byteArray);
+            _channel.BasicPublish(TrackingsExchange, _queue, null, byteArray);
         }
     }
 }

@@ -8,6 +8,6 @@ namespace PedidoWebApi.Api.Infrastructure
 {
     public interface IPublisher
     {
-        void Publish(PaymentDTO dto, String queue);
+        void Publish(PaymentDTO dto);
     }
 }

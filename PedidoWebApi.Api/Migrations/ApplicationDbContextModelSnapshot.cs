@@ -22,22 +22,41 @@ namespace PedidoWebApi.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("PedidoWebApi.Domain.Domain.Enum.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdPedido")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("payments");
+                });
+
             modelBuilder.Entity("ProjetoWebApi.Domain.Cliente", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ClienteId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Senha")
+                        .HasColumnType("text");
 
-                    b.HasIndex("ClienteId");
+                    b.HasKey("Id");
 
                     b.ToTable("Clientes");
                 });
@@ -48,18 +67,16 @@ namespace PedidoWebApi.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("PedidoId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("Valor")
+                    b.Property<decimal>("ValorTotal")
                         .HasColumnType("numeric");
 
                     b.Property<Guid>("idCliente")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("pagamento")
+                        .HasColumnType("boolean");
 
-                    b.HasIndex("PedidoId");
+                    b.HasKey("Id");
 
                     b.HasIndex("idCliente");
 
@@ -84,7 +101,7 @@ namespace PedidoWebApi.Api.Migrations
 
                     b.HasIndex("idProduto");
 
-                    b.ToTable("PedidoProduto");
+                    b.ToTable("PedidoProdutos");
                 });
 
             modelBuilder.Entity("ProjetoWebApi.Domain.Produto", b =>
@@ -97,32 +114,19 @@ namespace PedidoWebApi.Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ProdutoId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProdutoId");
-
                     b.ToTable("Produtos");
-                });
-
-            modelBuilder.Entity("ProjetoWebApi.Domain.Cliente", b =>
-                {
-                    b.HasOne("ProjetoWebApi.Domain.Cliente", null)
-                        .WithMany("Clientes")
-                        .HasForeignKey("ClienteId");
                 });
 
             modelBuilder.Entity("ProjetoWebApi.Domain.Pedido", b =>
                 {
-                    b.HasOne("ProjetoWebApi.Domain.Pedido", null)
-                        .WithMany("Pedidos")
-                        .HasForeignKey("PedidoId");
-
                     b.HasOne("ProjetoWebApi.Domain.Cliente", "cliente")
                         .WithMany("pedidos")
                         .HasForeignKey("idCliente")
@@ -136,7 +140,7 @@ namespace PedidoWebApi.Api.Migrations
                 {
                     b.HasOne("ProjetoWebApi.Domain.Pedido", "Pedido")
                         .WithMany("PedidoProdutos")
-                        .HasForeignKey("idProduto")
+                        .HasForeignKey("IdPedido")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -151,32 +155,19 @@ namespace PedidoWebApi.Api.Migrations
                     b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("ProjetoWebApi.Domain.Produto", b =>
-                {
-                    b.HasOne("ProjetoWebApi.Domain.Produto", null)
-                        .WithMany("Produtos")
-                        .HasForeignKey("ProdutoId");
-                });
-
             modelBuilder.Entity("ProjetoWebApi.Domain.Cliente", b =>
                 {
-                    b.Navigation("Clientes");
-
                     b.Navigation("pedidos");
                 });
 
             modelBuilder.Entity("ProjetoWebApi.Domain.Pedido", b =>
                 {
                     b.Navigation("PedidoProdutos");
-
-                    b.Navigation("Pedidos");
                 });
 
             modelBuilder.Entity("ProjetoWebApi.Domain.Produto", b =>
                 {
                     b.Navigation("PedidoProdutos");
-
-                    b.Navigation("Produtos");
                 });
 #pragma warning restore 612, 618
         }

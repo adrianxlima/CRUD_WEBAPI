@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace PedidoWebApi.Domain.Domain.DTO
 {
-    public class PaymentMessageDTO
+    public class PedidoUpdateDTO : PedidoDTO
     {
-        public Guid IdPedido { get; set; }
-        public Guid IdPayment { get; set; }
+        public Guid Idpedido {get; set;}
+
     }
 }
