@@ -61,11 +61,11 @@ public class PedidoController : ControllerBase
         [HttpDelete]
         public IActionResult Delete([FromBody] Guid id)
         {
-            Pedido pedido = _pedidoRepository.SearchID(id);
+            Pedido pedido = _pedidoService.SearchID(id);
             if (pedido == null)
                 return NotFound();
 
-            _pedidoRepository.Remove(pedido);
+            _pedidoService.Remove(pedido);
             return Ok();
         }
 

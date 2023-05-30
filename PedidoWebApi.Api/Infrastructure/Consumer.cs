@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PedidoWebApi.Api.Repository;
@@ -12,51 +11,65 @@ using RabbitMQ.Client.Events;
 namespace PedidoWebApi.Api.Infrastructure
 {
     public class Consumer : BackgroundService
-    {   
-        private readonly IModel _channel;
-        private readonly IPedidoRepository _pedidoRepository;
+    {
         private readonly IConnection _connection;
-        
-        private const string RouterSubScribe = "FilaPagamentos";
+        private readonly IServiceScopeFactory _serviceScopeFactory;
         private const string _queue = "FilaPedidos";
-        private const string TrackingsExchange = "tracking-service";
-        public  Consumer( IPedidoRepository pedidoRepository)
+
+        public Consumer(IServiceScopeFactory serviceScopeFactory)
         {
-            _pedidoRepository = pedidoRepository;
+            _serviceScopeFactory = serviceScopeFactory;
             var connectionFactory = new ConnectionFactory
             {
                 HostName = "localhost",
-                
             };
-    
 
             _connection = connectionFactory.CreateConnection();
-            _channel = _connection.CreateModel();
         }
 
-        public Task Consume(PaymentDTO events)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-          var pedido =  _pedidoRepository.UpdatePayment(events);
-          Console.WriteLine(pedido);
-          return Task.CompletedTask;
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var pedidoRepository = scope.ServiceProvider.GetRequiredService<IPedidoRepository>();
+                var channel = _connection.CreateModel();
+
+                channel.QueueDeclare(_queue, true, false, false, null);
+                var consume = new EventingBasicConsumer(channel);
+
+                consume.Received += async (model, eargs) =>
+                {
+                    var message = eargs.Body.ToArray();
+                    Console.WriteLine(message);
+                    var content = Encoding.UTF8.GetString(message);
+                    var events = JsonConvert.DeserializeObject<PaymentDTO>(content);
+
+                    try
+                    {
+                        await Consume(events, pedidoRepository);
+                        Console.WriteLine(events);
+                        channel.BasicAck(eargs.DeliveryTag, false);
+                        Console.WriteLine(events.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Erro ao consumir a mensagem: {ex.Message}");
+                        // Realize qualquer tratamento de erro necessário
+                        // Você pode optar por rejeitar (BasicReject) ou reenfileirar (BasicNack) a mensagem, se necessário
+                    }
+                };
+
+                channel.BasicConsume(_queue, false, consume);
+
+                await Task.Delay(Timeout.Infinite, stoppingToken);
+            }
         }
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+
+        private async Task Consume(PaymentDTO events, IPedidoRepository pedidoRepository)
         {
-            _channel.ExchangeDeclare(TrackingsExchange, "topic", true, false);
-            _channel.QueueDeclare(_queue, true, false, false);
-            _channel.QueueBind(_queue, TrackingsExchange, RouterSubScribe);
-            var consume = new EventingBasicConsumer(_channel);
-            consume.Received+=(model, eargs)=> {
-                var message = eargs.Body.ToArray();
-                var content = Encoding.UTF8.GetString(message);
-                var events = JsonConvert.DeserializeObject<PaymentDTO>(content);
-                this.Consume(events).Wait();
-                Console.WriteLine(events);
-                _channel.BasicAck(eargs.DeliveryTag, false);
-                Console.WriteLine(events.ToString());
-            };
-            _channel.BasicConsume(_queue, false, consume);
-            return Task.CompletedTask;
+            // Use o pedidoRepository para atualizar o pagamento ou realizar qualquer lógica de consumo necessária
+            var pedido =  pedidoRepository.UpdatePayment(events);
+            Console.WriteLine("Pedido Recebido = " + pedido.ToString());
         }
     }
 }

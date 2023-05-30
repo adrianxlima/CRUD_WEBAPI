@@ -40,7 +40,6 @@ namespace PedidoWebApi.Api.Repository
         public Cliente SearchID(Guid Id)
         {
             var cliente =  _context.Clientes.FirstOrDefault(c => c.Id == Id)!;
-            Console.WriteLine(cliente);
             return cliente;
         }
         public Cliente Update(Cliente cliente)

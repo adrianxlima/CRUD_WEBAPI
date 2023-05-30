@@ -13,8 +13,7 @@ namespace PedidoWebApi.Api.Infrastructure
     {
         private readonly IConnection _connection;
         private IModel _channel;
-        private const string TrackingsExchange = "tracking-service";
-        private string _queue = "FilaPagamentos";
+        private string _queue = "FilaPedidos";
         public Publisher()
         {
             var connectionFactory = new ConnectionFactory
@@ -27,10 +26,12 @@ namespace PedidoWebApi.Api.Infrastructure
         }
         public void Publish(PaymentDTO dto)
         {
+            _channel.QueueDeclare(_queue, true, false, false, null);
             var payLoad = JsonConvert.SerializeObject(dto);
             var byteArray = Encoding.UTF8.GetBytes(payLoad);
-
-            _channel.BasicPublish(TrackingsExchange, _queue, null, byteArray);
+             var properties = _channel.CreateBasicProperties();
+             properties.Persistent = true;
+            _channel.BasicPublish("", _queue, properties, byteArray);
         }
     }
 }

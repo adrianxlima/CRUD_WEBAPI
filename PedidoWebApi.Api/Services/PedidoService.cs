@@ -27,9 +27,8 @@ namespace PedidoWebApi.Services
 
         public Object Create(PedidoDTO dto)
         {
-            Console.WriteLine(dto);
+            
             var cliente = _ClienteRepository.SearchID(dto.ClienteId);
-            Console.WriteLine(cliente);
             if (cliente is null)
             {
                 return "Id do usuario invalido.";

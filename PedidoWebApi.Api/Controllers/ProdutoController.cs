@@ -33,8 +33,12 @@ public class ProdutoController : ControllerBase
     [HttpPost]
     public IActionResult Add([FromBody] ProdutoDTO dto)
     {
-       var res =  _produtoService.Create(dto);
-        return Ok(res);
+       var produto = _produtoService.Create(dto);
+       if(produto is string p)
+       {
+        return BadRequest(p);
+       }
+       return Ok(produto);
     }
 
     [HttpPut]
